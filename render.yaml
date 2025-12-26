@@ -1,20 +1,9 @@
+# 顶级字段：指定 docker-compose 文件路径
+docker_compose_file: docker-compose.yml
 services:
-  - type: web
+  - type: docker
     name: docker-mirror
-    env: docker
-    # 直接指定镜像，替代 docker-compose
-    image: registry:2
-    # 环境变量（核心代理配置）
-    envVars:
-      - key: REGISTRY_PROXY_REMOTEURL
-        value: https://registry-1.docker.io
-      - key: REGISTRY_STORAGE_DELETE_ENABLED
-        value: "true"
-      - key: REGISTRY_PROXY_TIMEOUT
-        value: "86400"
-    # 暴露容器端口（registry 默认 5000）
-    expose: 5000
-    # 免费实例计划
+    # 对应 docker-compose 中的服务名
+    serviceName: docker-mirror
     plan: free
-    # 自动部署
     autoDeploy: true
