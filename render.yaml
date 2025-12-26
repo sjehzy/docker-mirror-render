@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: docker-mirror
+    env: docker
+    dockerComposeFile: docker-compose.yml
+    # 实例类型：免费（free）
+    plan: free
+    # 端口映射（对应 docker-compose 中的 80 端口）
+    ports:
+      - 80
+    # 自动部署：当 GitHub 仓库有更新时自动重新部署
+    autoDeploy: true
