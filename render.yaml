@@ -2,9 +2,6 @@ services:
   - type: web
     name: docker-mirror
     env: docker
-    # 指定 Dockerfile 路径（默认同目录下的 Dockerfile）
-    buildCommand: docker build -t docker-mirror .
-    startCommand: /entrypoint.sh /etc/docker/registry/config.yml
     envVars:
       - key: REGISTRY_PROXY_REMOTEURL
         value: https://registry-1.docker.io
@@ -14,5 +11,3 @@ services:
         value: "86400"
     plan: free
     autoDeploy: true
-    # 可选：指定 Dockerfile 路径（如果不在根目录）
-    # dockerfilePath: ./Dockerfile
