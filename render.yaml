@@ -2,9 +2,19 @@ services:
   - type: web
     name: docker-mirror
     env: docker
-    # 正确的docker-compose文件配置字段（下划线分隔）
-    docker_compose_file: docker-compose.yml
+    # 直接指定镜像，替代 docker-compose
+    image: registry:2
+    # 环境变量（核心代理配置）
+    envVars:
+      - key: REGISTRY_PROXY_REMOTEURL
+        value: https://registry-1.docker.io
+      - key: REGISTRY_STORAGE_DELETE_ENABLED
+        value: "true"
+      - key: REGISTRY_PROXY_TIMEOUT
+        value: "86400"
+    # 暴露容器端口（registry 默认 5000）
+    expose: 5000
     # 免费实例计划
     plan: free
-    # 仓库更新时自动部署
+    # 自动部署
     autoDeploy: true
