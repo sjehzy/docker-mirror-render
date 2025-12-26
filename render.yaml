@@ -1,9 +1,7 @@
 services:
-  - type: web  # 唯一合法的容器部署类型
-    name: docker-mirror  # 自定义服务名，可改
-    env: docker  # 指定环境类型为 Docker
-    image: registry:2  # 直接使用官方 registry 镜像
-    # 核心环境变量：配置 Docker Hub 代理
+  - type: web
+    name: docker-mirror
+    env: docker
     envVars:
       - key: REGISTRY_PROXY_REMOTEURL
         value: https://registry-1.docker.io
@@ -11,9 +9,5 @@ services:
         value: "true"
       - key: REGISTRY_PROXY_TIMEOUT
         value: "86400"
-    # 暴露容器端口（registry 服务默认监听 5000 端口）
-    expose: 5000
-    # 实例计划：免费版
     plan: free
-    # 自动部署：仓库更新时重新部署
     autoDeploy: true
