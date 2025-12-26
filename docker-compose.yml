@@ -1,0 +1,16 @@
+version: '3'
+services:
+  docker-mirror:
+    image: registry:2
+    # 容器内暴露5000端口，Render会自动映射到公网80/443
+    expose:
+      - "5000"
+    environment:
+      # 核心：代理Docker Hub官方仓库
+      REGISTRY_PROXY_REMOTEURL: https://registry-1.docker.io
+      # 允许删除过期镜像
+      REGISTRY_STORAGE_DELETE_ENABLED: "true"
+      # 缓存超时时间（24小时）
+      REGISTRY_PROXY_TIMEOUT: "86400"
+    # Render免费实例仅支持临时存储，无需持久化（付费实例可配置持久卷）
+    restart: always
