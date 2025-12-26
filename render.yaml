@@ -1,7 +1,8 @@
 services:
   - type: web
     name: docker-mirror
-    env: docker
+    # 直接指定使用官方 registry 镜像，无需本地 Dockerfile
+    image: registry:2
     envVars:
       - key: REGISTRY_PROXY_REMOTEURL
         value: https://registry-1.docker.io
@@ -9,5 +10,8 @@ services:
         value: "true"
       - key: REGISTRY_PROXY_TIMEOUT
         value: "86400"
+    # 暴露 registry 默认端口 5000
+    ports:
+      - 5000
     plan: free
     autoDeploy: true
