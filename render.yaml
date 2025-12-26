@@ -1,8 +1,10 @@
 services:
   - type: web
     name: docker-mirror
-    # 直接指定使用官方 registry 镜像，无需本地 Dockerfile
-    image: registry:2
+    env: docker
+    # 指定 Dockerfile 路径（默认同目录下的 Dockerfile）
+    buildCommand: docker build -t docker-mirror .
+    startCommand: /entrypoint.sh /etc/docker/registry/config.yml
     envVars:
       - key: REGISTRY_PROXY_REMOTEURL
         value: https://registry-1.docker.io
@@ -10,8 +12,7 @@ services:
         value: "true"
       - key: REGISTRY_PROXY_TIMEOUT
         value: "86400"
-    # 暴露 registry 默认端口 5000
-    ports:
-      - 5000
     plan: free
     autoDeploy: true
+    # 可选：指定 Dockerfile 路径（如果不在根目录）
+    # dockerfilePath: ./Dockerfile
